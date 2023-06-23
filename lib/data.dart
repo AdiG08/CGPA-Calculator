@@ -1,15 +1,4 @@
-const List<String> gradeList = [
-  'O',
-  'A+',
-  'A',
-  'B+',
-  'B',
-  'C',
-  'W',
-  'I',
-  'F',
-  'Ab'
-];
+const List<String> gradeList = ['O', 'A+', 'A', 'B+', 'B', 'C', 'I', 'F', 'Ab'];
 
 class Task {
   late String grade;

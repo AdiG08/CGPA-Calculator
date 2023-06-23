@@ -2,9 +2,6 @@ import 'package:cgpa_calc/Widgets/subject_tile.dart';
 import 'package:cgpa_calc/data.dart';
 import 'package:flutter/material.dart';
 
-// import 'credit_tile.dart';
-// import 'grade_tile.dart';
-
 class SubjectList extends StatefulWidget {
   final List<Task> tasks;
   SubjectList(this.tasks);

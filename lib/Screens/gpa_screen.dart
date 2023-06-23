@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cgpa_calc/Widgets/subject_list.dart';
 import 'package:cgpa_calc/data.dart';
 import 'package:flutter/material.dart';
@@ -9,10 +11,47 @@ class GPAScreen extends StatefulWidget {
 }
 
 class _GPAScreenState extends State<GPAScreen> {
+  double gpa = 0.00;
   List<Task> tasks = [
     Task(grade: 'O', credit: 1),
     Task(grade: 'O', credit: 1),
   ];
+
+  double roundDouble(double value, int places) {
+    num mod = pow(10.0, places);
+    return ((value * mod).round().toDouble() / mod);
+  }
+
+  double calculate() {
+    int totalCredits = 0;
+    double totalCreditPoints = 0;
+    late double gpa;
+    for (var gradeMap in tasks) {
+      String grade = gradeMap.grade;
+      int credit = gradeMap.credit;
+      late double creditPoints;
+
+      if (grade == 'O') {
+        creditPoints = 10.0;
+      } else if (grade == 'A+') {
+        creditPoints = 9.0;
+      } else if (grade == 'A') {
+        creditPoints = 8.0;
+      } else if (grade == 'B+') {
+        creditPoints = 7.0;
+      } else if (grade == 'B') {
+        creditPoints = 6.0;
+      } else if (grade == 'C') {
+        creditPoints = 5.0;
+      } else {
+        creditPoints = 0.0;
+      }
+      totalCreditPoints += creditPoints * credit;
+      totalCredits += credit;
+    }
+    gpa = roundDouble(totalCreditPoints / totalCredits, 2);
+    return gpa;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,18 +99,26 @@ class _GPAScreenState extends State<GPAScreen> {
                 ),
               ),
               Expanded(child: SubjectList(tasks)),
-              FloatingActionButton.small(
-                onPressed: () {
-                  setState(() {
-                    tasks.add(Task(grade: 'O', credit: 1));
-                  });
-                },
-                child: Icon(Icons.add),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  FloatingActionButton.small(
+                    onPressed: () {
+                      setState(() {
+                        tasks.add(Task(grade: 'O', credit: 1));
+                      });
+                    },
+                    child: Icon(Icons.add),
+                  ),
+                  ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          gpa = calculate();
+                        });
+                      },
+                      child: Text('Calculate'))
+                ],
               ),
-              // FloatingActionButton.small(
-              //   onPressed: () {},
-              //   child: Icon(Icons.add),
-              // ),
               Padding(
                 padding: EdgeInsets.only(
                   left: _mediaQuery.size.height * 0.02,
@@ -93,6 +140,7 @@ class _GPAScreenState extends State<GPAScreen> {
                       child: Container(),
                     ),
                     Container(
+                      child: Center(child: Text('$gpa')),
                       height: _mediaQuery.size.height * 0.09,
                       width: _mediaQuery.size.height * 0.19,
                       margin: EdgeInsets.only(
@@ -123,6 +171,7 @@ class _GPAScreenState extends State<GPAScreen> {
     );
   }
 }
+
 // Expanded(
 // child: Row(
 // children: [
