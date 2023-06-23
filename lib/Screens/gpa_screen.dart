@@ -1,12 +1,18 @@
 import 'package:cgpa_calc/Widgets/subject_list.dart';
+import 'package:cgpa_calc/data.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class GPAScreen extends StatelessWidget {
-  // List<List<String>> dropdownValues = List.generate(
-  //   5,
-  //   (row) => List<String>.generate(3, (col) => 'O'),
-  // );
+class GPAScreen extends StatefulWidget {
+  @override
+  State<GPAScreen> createState() => _GPAScreenState();
+}
+
+class _GPAScreenState extends State<GPAScreen> {
+  List<Task> tasks = [
+    Task(grade: 'O', credit: 1),
+    Task(grade: 'O', credit: 1),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -53,11 +59,19 @@ class GPAScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              Expanded(child: SubjectList()),
+              Expanded(child: SubjectList(tasks)),
               FloatingActionButton.small(
-                onPressed: () {},
+                onPressed: () {
+                  setState(() {
+                    tasks.add(Task(grade: 'O', credit: 1));
+                  });
+                },
                 child: Icon(Icons.add),
               ),
+              // FloatingActionButton.small(
+              //   onPressed: () {},
+              //   child: Icon(Icons.add),
+              // ),
               Padding(
                 padding: EdgeInsets.only(
                   left: _mediaQuery.size.height * 0.02,
