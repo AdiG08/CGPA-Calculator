@@ -140,7 +140,7 @@ class _GPAScreenState extends State<GPAScreen> {
                       child: Container(),
                     ),
                     Container(
-                      child: Center(child: Text('$gpa')),
+                      child: Center(child: Text('$gpa')),//end result
                       height: _mediaQuery.size.height * 0.09,
                       width: _mediaQuery.size.height * 0.19,
                       margin: EdgeInsets.only(
